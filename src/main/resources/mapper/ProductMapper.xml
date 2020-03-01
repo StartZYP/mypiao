@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.startzyp.github.mypiao.dao.ProductMapper">
+    <resultMap id="ProductResultMap" type="com.startzyp.github.mypiao.entity.Product">
+        <id column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="productname" jdbcType="VARCHAR" property="productname" />
+        <result column="addr" jdbcType="VARCHAR" property="addr" />
+        <result column="isDelete" jdbcType="VARCHAR" property="isDelete" />
+        <result column="types" jdbcType="VARCHAR" property="types" />
+        <result column="groupname" jdbcType="VARCHAR" property="groupname" />
+        <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+        <result column="num" jdbcType="INTEGER" property="num" />
+        <result column="dates" jdbcType="TIMESTAMP" property="dates" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+    </resultMap>
+
+  <sql id="Base_Column_List">
+    pid,productname, addr, isDelete, types, groupname, introduction, num, dates, price
+  </sql>
+
+   <select id="listProduct" resultMap="ProductResultMap">
+  		select
+          <include refid="Base_Column_List" />
+	    from zk_product where num!=0
+  </select>
+
+    <update id="DeleteProduct" parameterType="java.lang.Integer">
+        UPDATE zk_product
+        SET num = 0
+        where pid = #{pid,jdbcType=INTEGER}
+    </update>
+
+
+  <insert id="insert" parameterType="com.startzyp.github.mypiao.entity.Product">
+    insert into zk_product (productname,introduction,groupname, num, addr, types, dates, price)
+    values (#{productname,jdbcType=VARCHAR},#{introduction,jdbcType=VARCHAR},#{groupname,jdbcType=VARCHAR},#{num,jdbcType=INTEGER},#{addr,jdbcType=VARCHAR}, #{types,jdbcType=VARCHAR}, #{dates,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL})
+  </insert>
+
+
+
+
+</mapper>

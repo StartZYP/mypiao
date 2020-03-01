@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.startzyp.github.mypiao.dao.FoderMapper">
+    <resultMap id="FoderResultMap" type="com.startzyp.github.mypiao.entity.Foder">
+        <id column="fid" jdbcType="INTEGER" property="fid" />
+        <result column="uid" jdbcType="VARCHAR" property="uid" />
+        <result column="productname" jdbcType="VARCHAR" property="productname" />
+        <result column="addr" jdbcType="VARCHAR" property="addr" />
+        <result column="groupname" jdbcType="VARCHAR" property="groupname" />
+        <result column="types" jdbcType="VARCHAR" property="groupname" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="buydate" jdbcType="TIMESTAMP" property="buydate" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+    </resultMap>
+
+  <sql id="Base_Column_List">
+    fid, uid, productname, addr, groupname, types, price, buydate, status
+  </sql>
+
+   <select id="listfoderall" resultMap="FoderResultMap">
+  		select
+          <include refid="Base_Column_List" />
+	    from zk_foder
+  </select>
+
+    <select id="listfoder" parameterType="java.lang.String" resultMap="FoderResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from zk_foder where uid = #{uid,jdbcType=VARCHAR}
+    </select>
+
+    <update id="Updata" parameterType="java.lang.Integer">
+        UPDATE zk_foder
+        SET status = '已出票'
+        where fid = #{fid,jdbcType=INTEGER}
+    </update>
+
+
+  <insert id="insert" parameterType="com.startzyp.github.mypiao.entity.Foder">
+    insert into zk_foder (uid,productname,addr, groupname, types, price, buydate, status)
+    values (#{uid,jdbcType=VARCHAR},#{productname,jdbcType=VARCHAR},#{addr,jdbcType=VARCHAR},#{groupname,jdbcType=VARCHAR},#{types,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{buydate,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL})
+  </insert>
+
+
+
+
+</mapper>
